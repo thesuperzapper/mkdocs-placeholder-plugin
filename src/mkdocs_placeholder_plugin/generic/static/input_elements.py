@@ -43,7 +43,7 @@ def create_input_html_with_fallback(placeholder: Placeholder) -> str:
     elif placeholder.input_type == InputType.Field:
         value_escaped = html.escape(placeholder.default_value)
         value_length = len(placeholder.default_value)
-        oninput_script = "this.setAttribute('size', this.value.length)"
-        return f'<input data-input-for="{placeholder.name}" value="{value_escaped}" size="{value_length}" oninput="{oninput_script}" disabled>'
+        oninput_script = "this.style.width=0; this.style.width=this.scrollWidth+'px';"
+        return f'<input data-input-for="{placeholder.name}" value="{value_escaped}" size="{value_length}" oninput="{oninput_script}" autocomplete="off" disabled>'
     else:
         raise Exception(f"Unknown input type: {placeholder.input_type}")
