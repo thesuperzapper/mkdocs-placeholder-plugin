@@ -41,6 +41,9 @@ def create_input_html_with_fallback(placeholder: Placeholder) -> str:
             default_value = list(placeholder.values.keys())[0]
         return f'<select data-input-for="{placeholder.name}" disabled><option>{html.escape(default_value)}</option></select>'
     elif placeholder.input_type == InputType.Field:
-        return f'<input data-input-for="{placeholder.name}" value="{html.escape(placeholder.default_value)}" disabled>'
+        value_escaped = html.escape(placeholder.default_value)
+        value_length = len(placeholder.default_value)
+        oninput_script = "this.setAttribute('size', this.value.length)"
+        return f'<input data-input-for="{placeholder.name}" value="{value_escaped}" size="{value_length}" oninput="{oninput_script}" disabled>'
     else:
         raise Exception(f"Unknown input type: {placeholder.input_type}")
